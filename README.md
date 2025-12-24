@@ -1,91 +1,172 @@
-# Welcome to Your Miaoda Project
+# DevNest - Developer Tools Platform
 
-## Project Info
+A production-ready, high-performance developer tools platform providing essential utilities for developers worldwide.
+
+## Features
+
+- **JSON Formatter & Validator** - Format and validate JSON with real-time error detection
+- **Base64 Encoder/Decoder** - Encode and decode Base64 strings instantly
+- **Regex Tester** - Test regular expressions with live match highlighting
+- **URL Encoder/Decoder** - Encode and decode URL strings for safe transmission
+- **Code Minifier** - Minify HTML, CSS, and JavaScript to reduce file size
+- **Color Picker & Converter** - Pick colors and convert between HEX, RGB, and HSL formats
+- **Markdown Previewer** - Write Markdown with live preview rendering
+
+## Tech Stack
+
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **Icons**: Lucide React
+- **Routing**: React Router v6
+
+## Design Features
+
+- 🌙 Dark mode as default with light mode toggle
+- ⚡ Lightning-fast performance with local processing
+- 🔒 Privacy-first - all data stays in your browser
+- 📱 Fully responsive design for all devices
+- 🎨 Modern, developer-focused UI with electric blue accents
+- ♿ Accessible with keyboard navigation support
 
 ## Project Directory
 
 ```
-├── README.md # Documentation
-├── components.json # Component library configuration
-├── index.html # Entry file
-├── package.json # Package management
-├── postcss.config.js # PostCSS configuration
-├── public # Static resources directory
-│   ├── favicon.png # Icon
-│   └── images # Image resources
-├── src # Source code directory
-│   ├── App.tsx # Entry file
-│   ├── components # Components directory
-│   ├── context # Context directory
-│   ├── db # Database configuration directory
-│   ├── hooks # Common hooks directory
-│   ├── index.css # Global styles
-│   ├── layout # Layout directory
-│   ├── lib # Utility library directory
-│   ├── main.tsx # Entry file
-│   ├── routes.tsx # Routing configuration
-│   ├── pages # Pages directory
-│   ├── services # Database interaction directory
-│   ├── types # Type definitions directory
-├── tsconfig.app.json # TypeScript frontend configuration file
-├── tsconfig.json # TypeScript configuration file
-├── tsconfig.node.json # TypeScript Node.js configuration file
-└── vite.config.ts # Vite configuration file
+├── README.md                  # Documentation
+├── index.html                 # Entry HTML file
+├── package.json               # Package management
+├── src/                       # Source code directory
+│   ├── App.tsx                # Main app component
+│   ├── main.tsx               # Entry point
+│   ├── routes.tsx             # Route configuration
+│   ├── index.css              # Global styles & design tokens
+│   ├── components/            # React components
+│   │   ├── layouts/           # Layout components
+│   │   │   ├── TopNavigation.tsx
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   └── MainLayout.tsx
+│   │   └── ui/                # shadcn/ui components
+│   ├── contexts/              # React contexts
+│   │   └── ThemeContext.tsx   # Theme management
+│   ├── hooks/                 # Custom React hooks
+│   │   └── use-local-storage.ts
+│   ├── lib/                   # Utility libraries
+│   │   ├── tool-utils.ts      # Tool utility functions
+│   │   ├── tools-data.ts      # Tools configuration
+│   │   └── utils.ts           # General utilities
+│   ├── pages/                 # Page components
+│   │   ├── HomePage.tsx
+│   │   ├── AboutPage.tsx
+│   │   ├── PrivacyPage.tsx
+│   │   └── tools/             # Tool pages
+│   └── types/                 # TypeScript type definitions
+└── vite.config.ts             # Vite configuration
 ```
-
-## Tech Stack
-
-Vite, TypeScript, React, Supabase
 
 ## Development Guidelines
 
-### How to edit code locally?
-
-You can choose [VSCode](https://code.visualstudio.com/Download) or any IDE you prefer. The only requirement is to have Node.js and npm installed.
-
 ### Environment Requirements
 
-```
+```bash
 # Node.js ≥ 20
 # npm ≥ 10
-Example:
-# node -v   # v20.18.3
-# npm -v    # 10.8.2
+# Example:
+node -v   # v20.18.3
+npm -v    # 10.8.2
 ```
 
-### Installing Node.js on Windows
+### Local Development
 
-```
-# Step 1: Visit the Node.js official website: https://nodejs.org/, click download. The website will automatically suggest a suitable version (32-bit or 64-bit) for your system.
-# Step 2: Run the installer: Double-click the downloaded installer to run it.
-# Step 3: Complete the installation: Follow the installation wizard to complete the process.
-# Step 4: Verify installation: Open Command Prompt (cmd) or your IDE terminal, and type `node -v` and `npm -v` to check if Node.js and npm are installed correctly.
-```
+```bash
+# Step 1: Install dependencies
+npm install
 
-### Installing Node.js on macOS
+# Step 2: Start development server
+npm run dev
 
-```
-# Step 1: Using Homebrew (Recommended method): Open Terminal. Type the command `brew install node` and press Enter. If Homebrew is not installed, you need to install it first by running the following command in Terminal:
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-Alternatively, use the official installer: Visit the Node.js official website. Download the macOS .pkg installer. Open the downloaded .pkg file and follow the prompts to complete the installation.
-# Step 2: Verify installation: Open Command Prompt (cmd) or your IDE terminal, and type `node -v` and `npm -v` to check if Node.js and npm are installed correctly.
+# Step 3: Open browser to http://localhost:5173
 ```
 
-### After installation, follow these steps:
+### Build for Production
 
+```bash
+# Build the application
+npm run build
+
+# Preview production build locally
+npm run preview
 ```
-# Step 1: Download the code package
-# Step 2: Extract the code package
-# Step 3: Open the code package with your IDE and navigate into the code directory
-# Step 4: In the IDE terminal, run the command to install dependencies: npm i
-# Step 5: In the IDE terminal, run the command to start the development server: npm run dev -- --host 127.0.0.1
-# Step 6: if step 5 failed, try this command to start the development server: npx vite --host 127.0.0.1
+
+### Code Quality
+
+```bash
+# Run linter
+npm run lint
+
+# Type checking
+npm run type-check
 ```
 
-### How to develop backend services?
+## Deployment
 
-Configure environment variables and install relevant dependencies.If you need to use a database, please use the official version of Supabase.
+### Deploy to Vercel (Recommended)
 
-## Learn More
+1. Push your code to GitHub
+2. Visit [vercel.com](https://vercel.com) and sign in
+3. Click "New Project"
+4. Import your GitHub repository
+5. Vercel will auto-detect Vite and configure build settings
+6. Click "Deploy"
 
-You can also check the help documentation: Download and Building the app（ [https://intl.cloud.baidu.com/en/doc/MIAODA/s/download-and-building-the-app-en](https://intl.cloud.baidu.com/en/doc/MIAODA/s/download-and-building-the-app-en)）to learn more detailed content.
+**Build Settings:**
+- Framework Preset: Vite
+- Build Command: `npm run build`
+- Output Directory: `dist`
+
+### Deploy to Netlify
+
+1. Push your code to GitHub
+2. Visit [netlify.com](https://netlify.com) and sign in
+3. Click "Add new site" → "Import an existing project"
+4. Connect to your GitHub repository
+5. Configure build settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+6. Click "Deploy site"
+
+### Static Hosting
+
+The built files in the `dist` folder can be deployed to any static hosting service:
+- GitHub Pages
+- Cloudflare Pages
+- AWS S3 + CloudFront
+- Firebase Hosting
+
+## Performance Optimization
+
+- All tools process data locally in the browser
+- No external API calls or server dependencies
+- Optimized bundle size with code splitting
+- Lazy loading for heavy components
+- Image optimization for fast loading
+
+## SEO Features
+
+- Semantic HTML structure
+- Proper meta tags and Open Graph data
+- Clean, descriptive URLs
+- Sitemap ready (add sitemap.xml for production)
+- Fast page load times for better rankings
+
+## Browser Support
+
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## License
+
+Copyright © 2025 DevNest. All rights reserved.
