@@ -6,13 +6,37 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { formatJSON, validateJSON } from '@/lib/tool-utils';
+import { ToolPageLayout } from '@/components/layouts/ToolPageLayout';
+import { detectContent } from '@/lib/content-detection';
+import { SmartSuggestionBanner } from '@/components/ui/smart-suggestion-banner';
 
 export default function JSONFormatterPage() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [suggestion, setSuggestion] = useState<{ toolName: string; toolPath: string; description: string } | null>(null);
   const { toast } = useToast();
+
+  const handleInputChange = (value: string) => {
+    setInput(value);
+    
+    // Detect content type and suggest tools
+    if (value.trim().length > 10) {
+      const detection = detectContent(value);
+      if (detection && detection.pattern.suggestedTool !== 'json-formatter') {
+        setSuggestion({
+          toolName: detection.pattern.toolName,
+          toolPath: `/tools/${detection.pattern.suggestedTool}`,
+          description: detection.pattern.description,
+        });
+      } else {
+        setSuggestion(null);
+      }
+    } else {
+      setSuggestion(null);
+    }
+  };
 
   const handleFormat = () => {
     const result = formatJSON(input);
@@ -73,14 +97,20 @@ export default function JSONFormatterPage() {
   }, [input]);
 
   return (
-    <div className="container py-8 px-4">
+    <ToolPageLayout toolId="json-formatter" toolName="JSON Formatter & Validator">
       <div className="max-w-6xl mx-auto space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">JSON Formatter & Validator</h1>
-          <p className="text-muted-foreground">
-            Format and validate JSON with real-time syntax highlighting and error detection
-          </p>
-        </div>
+        <p className="text-muted-foreground">
+          Format and validate JSON with real-time syntax highlighting and error detection
+        </p>
+
+        {suggestion && (
+          <SmartSuggestionBanner
+            toolName={suggestion.toolName}
+            toolPath={suggestion.toolPath}
+            description={suggestion.description}
+            onDismiss={() => setSuggestion(null)}
+          />
+        )}
 
         {error && (
           <Alert variant="destructive">
@@ -98,7 +128,7 @@ export default function JSONFormatterPage() {
             <CardContent>
               <Textarea
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={(e) => handleInputChange(e.target.value)}
                 placeholder='{"name": "John", "age": 30}'
                 className="font-mono text-sm min-h-[400px]"
               />
@@ -164,6 +194,6 @@ export default function JSONFormatterPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }
