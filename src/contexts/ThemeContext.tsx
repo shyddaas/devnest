@@ -19,6 +19,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
+    // Apply initial theme immediately
+    const theme = getThemeById(themeId) || getDefaultTheme();
+    setCurrentTheme(theme);
+    applyTheme(theme);
   }, []);
 
   useEffect(() => {
@@ -44,10 +48,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     
     setThemeId(oppositeTheme.id);
   };
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <ThemeContext.Provider
