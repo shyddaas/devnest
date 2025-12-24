@@ -19,7 +19,7 @@ interface TopNavigationProps {
 }
 
 export function TopNavigation({ onMenuClick }: TopNavigationProps) {
-  const { theme, toggleTheme } = useTheme();
+  const { currentTheme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -77,12 +77,12 @@ export function TopNavigation({ onMenuClick }: TopNavigationProps) {
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
-              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              title={`Switch to ${currentTheme.isDark ? 'light' : 'dark'} mode`}
             >
-              {theme === 'light' ? (
-                <Moon className="h-5 w-5" />
-              ) : (
+              {currentTheme.isDark ? (
                 <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
               )}
             </Button>
           </div>

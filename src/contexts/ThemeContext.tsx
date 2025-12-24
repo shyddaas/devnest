@@ -1,30 +1,64 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useLocalStorage } from '@/hooks/use-local-storage';
-
-type Theme = 'light' | 'dark';
+import { ThemePreset, THEME_PRESETS, applyTheme, getThemeById, getDefaultTheme } from '@/lib/theme-presets';
 
 interface ThemeContextType {
-  theme: Theme;
+  currentTheme: ThemePreset;
+  themeId: string;
+  setThemeById: (themeId: string) => void;
   toggleTheme: () => void;
+  availableThemes: ThemePreset[];
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useLocalStorage<Theme>('devnest-theme', 'dark');
+  const [themeId, setThemeId] = useLocalStorage<string>('devnest_theme', 'midnight-blue');
+  const [mounted, setMounted] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<ThemePreset>(getDefaultTheme());
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-  }, [theme]);
+    setMounted(true);
+  }, []);
 
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+  useEffect(() => {
+    if (!mounted) return;
+
+    const theme = getThemeById(themeId) || getDefaultTheme();
+    setCurrentTheme(theme);
+    applyTheme(theme);
+  }, [themeId, mounted]);
+
+  const setThemeByIdHandler = (newThemeId: string) => {
+    const theme = getThemeById(newThemeId);
+    if (theme) {
+      setThemeId(newThemeId);
+    }
   };
 
+  const toggleTheme = () => {
+    // Toggle between current theme and its opposite (dark/light)
+    const oppositeTheme = currentTheme.isDark
+      ? THEME_PRESETS.find(t => !t.isDark) || THEME_PRESETS[THEME_PRESETS.length - 1]
+      : THEME_PRESETS.find(t => t.isDark) || THEME_PRESETS[0];
+    
+    setThemeId(oppositeTheme.id);
+  };
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{
+        currentTheme,
+        themeId,
+        setThemeById: setThemeByIdHandler,
+        toggleTheme,
+        availableThemes: THEME_PRESETS,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
