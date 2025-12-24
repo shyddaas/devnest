@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { StarButton } from '@/components/ui/star-button';
 import { useFavorites } from '@/hooks/use-favorites';
 import { useUsageTracking } from '@/hooks/use-usage-tracking';
