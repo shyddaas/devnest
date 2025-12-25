@@ -3,6 +3,7 @@ import { TopNavigation } from './TopNavigation';
 import { Sidebar } from './Sidebar';
 import { Footer } from './Footer';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Analytics } from "@vercel/analytics/react";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -30,6 +31,7 @@ export function MainLayout({ children }: MainLayoutProps) {
       </div>
 
       <Footer />
+      <Analytics />
     </div>
   );
 }
