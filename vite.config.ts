@@ -18,7 +18,7 @@ export default defineConfig({
         namedExport: 'ReactComponent',
       },
     }), 
-    miaodaDevPlugin()
+    miaodaDevPlugin() as any
   ],
   resolve: {
     alias: {
